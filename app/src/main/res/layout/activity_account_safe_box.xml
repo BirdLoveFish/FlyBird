@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountSafeBoxActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_back_setting" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorDarkGrey"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/colorTintGrey">
+
+    <TextView
+        android:id="@+id/account_safe_box_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/s_account_name"
+        android:textColor="#000000"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:text="@string/s_account_account"
+        android:layout_weight="0.3"
+        android:gravity="center"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/account_safe_box_owner"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:textSize="13sp"-->
+<!--        android:textColor="#000000"-->
+<!--        android:text="@string/s_account_tips"-->
+<!--        android:layout_weight="1"-->
+<!--        android:gravity="center"/>-->
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorDarkGrey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.flybird.SlideRecyclerView
+            android:id="@+id/account_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

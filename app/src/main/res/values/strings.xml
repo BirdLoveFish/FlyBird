@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">FlyBird</string>
+    <string name="s_bank_safe_box">银行保险箱</string>
+    <string name="s_account_safe_box">账号保险箱</string>
+    <string name="s_father">bb</string>
+    <string name="s_mather">mm</string>
+    <string name="s_self">self</string>
+    <string name="s_db_insert">插入</string>
+    <string name="s_db_edit">编辑</string>
+    <string name="s_db_delete">删除</string>
+    <string name="s_db_query">查询</string>
+    <string name="s_bank_full_name">中文全称</string>
+    <string name="s_bank_simple_name">英文简称</string>
+    <string name="s_bank_owner">归属</string>
+    <string name="s_bank_password">密码</string>
+    <string name="s_bank_other">其他</string>
+    <string name="s_account_name">名称</string>
+    <string name="s_account_account">账号</string>
+    <string name="s_account_secret">密码</string>
+    <string name="s_account_other">其他</string>
+    <string name="s_login_name">登录</string>
+    <string name="s_login_register">注册</string>
+    <string name="s_db_validate_time">SAFE_BOX_VALIDATE_TIME</string>
+</resources>

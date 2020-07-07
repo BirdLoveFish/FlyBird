@@ -188,7 +188,7 @@ public class BankSafeBoxActivity extends AppCompatActivity {
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(context, "取消", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "取消", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {

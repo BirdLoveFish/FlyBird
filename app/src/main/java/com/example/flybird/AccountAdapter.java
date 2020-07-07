@@ -28,9 +28,15 @@ public class AccountAdapter extends SlideRecyclerView.Adapter<AccountAdapter.Vie
     private Context context;
     private AlertDialog alert;
 
+    private SQLiteDatabase db;
+    private MyDbOpenHelper myDbOpenHelper;
+
     public AccountAdapter(Context context, List<Account> accountList){
         this.context = context;
         this.accountList = accountList;
+
+        myDbOpenHelper = new MyDbOpenHelper(context, MyDbOpenHelper.DB_NAME, null, MyDbOpenHelper.DB_VERSION);
+        db = myDbOpenHelper.getWritableDatabase();
     }
 
     @NonNull
@@ -46,8 +52,6 @@ public class AccountAdapter extends SlideRecyclerView.Adapter<AccountAdapter.Vie
         Account account = accountList.get(position);
         holder.account_name.setText(account.getName());
         holder.account_account.setText(String.valueOf(account.getAccount()));
-//        holder.account_tips.setText(String.valueOf(account.getOther()));
-
 
         holder.account_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,15 +167,6 @@ public class AccountAdapter extends SlideRecyclerView.Adapter<AccountAdapter.Vie
                         values.put("PASSWORD", accountPassword);
                         values.put("OTHER", accountOther);
 
-                        //修改list内容
-//                        accountList.get(position).setName(accountName);
-//                        accountList.get(position).setAccount(accountSize);
-//                        accountList.get(position).setOther(accountTips);
-//                        notifyDataSetChanged();
-
-                        MyDbOpenHelper dbHelper=new MyDbOpenHelper(context,"flyBird.db",null,1);
-                        SQLiteDatabase db=dbHelper.getWritableDatabase();
-
                         db.update("ACCOUNTSAFEBOX",values,"id=?",new String[]{accountList.get(position).getId()});
 
                         //修改list内容
@@ -198,10 +193,7 @@ public class AccountAdapter extends SlideRecyclerView.Adapter<AccountAdapter.Vie
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //删除
-                        MyDbOpenHelper dbHelper=new MyDbOpenHelper(context,"flyBird.db",null,1);
-                        SQLiteDatabase database=dbHelper.getWritableDatabase();
-                        database.delete("BANKSAFEBOX","id=?",new String[]{accountList.get(position).getId()});
+                        db.delete("BANKSAFEBOX","id=?",new String[]{accountList.get(position).getId()});
                         accountList.remove(position);
                         notifyDataSetChanged();
                     }

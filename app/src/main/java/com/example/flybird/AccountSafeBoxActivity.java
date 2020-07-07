@@ -65,6 +65,7 @@ public class AccountSafeBoxActivity extends AppCompatActivity {
         title = findViewById(R.id.safe_box_title);
         recyclerView = findViewById(R.id.account_list);
         myDbOpenHelper = new MyDbOpenHelper(context, MyDbOpenHelper.DB_NAME, null, MyDbOpenHelper.DB_VERSION);
+        db = myDbOpenHelper.getWritableDatabase();
 
         myListener = new MyListener();
 
@@ -81,7 +82,7 @@ public class AccountSafeBoxActivity extends AppCompatActivity {
     }
 
     private void Query(){
-        db = myDbOpenHelper.getWritableDatabase();
+
         Cursor cursor = db.query("ACCOUNTSAFEBOX", null, null, null, null, null, "ID");
         if (cursor.moveToFirst()) {
             do {
@@ -129,7 +130,7 @@ public class AccountSafeBoxActivity extends AppCompatActivity {
                         showMenuAdd();
                         break;
                     case R.id.menu_bank_backups:
-                        Toast.makeText(context, "提示信息", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "备份成功", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -156,7 +157,7 @@ public class AccountSafeBoxActivity extends AppCompatActivity {
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(context, "取消", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "取消", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {

@@ -32,11 +32,16 @@ public class BankAdapter extends SlideRecyclerView.Adapter<BankAdapter.ViewHolde
     private Context context;
     private AlertDialog alert;
 
+    private SQLiteDatabase db;
+    private MyDbOpenHelper myDbOpenHelper;
+
 
     public BankAdapter(Context context, List<Bank> bankList){
         this.context = context;
         this.bankList = bankList;
 
+        myDbOpenHelper = new MyDbOpenHelper(context, MyDbOpenHelper.DB_NAME, null, MyDbOpenHelper.DB_VERSION);
+        db = myDbOpenHelper.getWritableDatabase();
     }
 
     @NonNull
@@ -78,7 +83,6 @@ public class BankAdapter extends SlideRecyclerView.Adapter<BankAdapter.ViewHolde
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView id;
         TextView full_name;
         TextView simple_name;
         TextView owner;
@@ -87,7 +91,6 @@ public class BankAdapter extends SlideRecyclerView.Adapter<BankAdapter.ViewHolde
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            id = itemView.findViewById(R.id.bank_id);
             full_name = itemView.findViewById(R.id.bank_full_name);
             simple_name = itemView.findViewById(R.id.bank_simple_name);
             owner = itemView.findViewById(R.id.owner);
@@ -126,11 +129,8 @@ public class BankAdapter extends SlideRecyclerView.Adapter<BankAdapter.ViewHolde
                                 }
                             }).create();
                     alert.show();
-
                 }
             });
-
-
         }
     }
 
@@ -183,9 +183,6 @@ public class BankAdapter extends SlideRecyclerView.Adapter<BankAdapter.ViewHolde
                     values.put("OTHER", bankOther);
 
                     //修改更新数据库
-                    MyDbOpenHelper dbHelper=new MyDbOpenHelper(context,"flyBird.db",null,1);
-                    SQLiteDatabase db=dbHelper.getWritableDatabase();
-
                     db.update("BANKSAFEBOX",values,"id=?",new String[]{bankList.get(position).getId()});
 
                     //修改list内容
@@ -214,9 +211,7 @@ public class BankAdapter extends SlideRecyclerView.Adapter<BankAdapter.ViewHolde
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //删除
-                    MyDbOpenHelper dbHelper=new MyDbOpenHelper(context,"flyBird.db",null,1);
-                    SQLiteDatabase database=dbHelper.getWritableDatabase();
-                    database.delete("BANKSAFEBOX","id=?",new String[]{bankList.get(position).getId()});
+                    db.delete("BANKSAFEBOX","id=?",new String[]{bankList.get(position).getId()});
                     bankList.remove(position);
                     notifyDataSetChanged();
 

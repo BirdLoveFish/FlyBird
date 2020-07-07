@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,8 +28,14 @@ import com.example.flybird.Models.Account;
 import com.example.flybird.Tools.MyDbOpenHelper;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class AccountSafeBoxActivity extends AppCompatActivity {
@@ -130,7 +137,53 @@ public class AccountSafeBoxActivity extends AppCompatActivity {
                         showMenuAdd();
                         break;
                     case R.id.menu_bank_backups:
-                        Toast.makeText(context, "备份成功", Toast.LENGTH_SHORT).show();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String urlAddress = null;
+                                Cursor cursor = db.query("SYSTEM", new String[]{"VALUE"}, "NAME=?", new String[]{"URLADDRESS"}, null, null, null);
+                                if(cursor.moveToNext()){
+                                    urlAddress = cursor.getString(cursor.getColumnIndex("VALUE"));
+                                }
+                                cursor.close();
+
+                                String address = null;
+                                if(urlAddress.endsWith("/")){
+                                    address = urlAddress + "connect";
+                                }else{
+                                    address = urlAddress + "/connect";
+                                }
+                                Log.d("TAG", "run: " + address);
+                                OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS).build();
+
+                                Request request = new Request.Builder().url(address).build();
+
+                                try {
+                                    Response response = client.newCall(request).execute();
+
+                                    if(response.isSuccessful()){
+                                        String body = response.body().string();
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(context, "备份成功", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }else{
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(context, "备份失败,请检查服务器地址", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    Log.d("TAG", "run: " + e.getMessage());
+                                }
+                            }
+                        }).start();
                         break;
                 }
                 return false;

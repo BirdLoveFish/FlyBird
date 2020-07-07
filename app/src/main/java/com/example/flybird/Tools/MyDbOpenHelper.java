@@ -18,7 +18,7 @@ public class MyDbOpenHelper extends SQLiteOpenHelper {
     }
 
     public static final String DB_NAME = "flyBird.db";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
     private static final int initDbVersion = 1;
 
     @Override
@@ -36,9 +36,10 @@ public class MyDbOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         for(int i = oldVersion+1;i<=newVersion;i++){
             switch (i){
-                case 1:
-                    break;
                 case 2:
+                    break;
+                case 3:
+                    db.execSQL("INSERT INTO SYSTEM (NAME,VALUE) VALUES('URLADDRESS', 'http://localhost:5000/')");
                     break;
                 default:
                     break;

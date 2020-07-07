@@ -24,6 +24,7 @@ import com.example.flybird.Tools.MyDbOpenHelper;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.info_item:
-                Toast.makeText(context, "个人工具", Toast.LENGTH_SHORT).show();
+                showSetAppInfoDialog();
                 break;
             case R.id.set_password:
                 showSetPasswordDialog();
@@ -69,6 +70,48 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSetAppInfoDialog(){
+        String urlAddress = null;
+        Cursor cursor = db.query("SYSTEM", new String[]{"VALUE"}, "NAME=?", new String[]{"URLADDRESS"}, null, null, null);
+        if(cursor.moveToNext()){
+            urlAddress = cursor.getString(cursor.getColumnIndex("VALUE"));
+        }
+        cursor.close();
+
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View appInfo = factory.inflate(R.layout.dialog_app_info_insert, null);
+        final EditText textUrlAddress = (EditText) appInfo.findViewById(R.id.dialog_app_info_insert_url);
+
+        textUrlAddress.setText(urlAddress);
+
+        final String finalUrlAddress = urlAddress;
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_launcher_background)
+                .setTitle("查看或设置App信息")
+                .setView(appInfo)
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        canCloseDialog(dialog, true);
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String updateUrlAddress = textUrlAddress.getText().toString();
+
+                        if(finalUrlAddress != updateUrlAddress){
+                            ContentValues values = new ContentValues();
+                            values.put("VALUE", textUrlAddress.getText().toString());
+                            db.update("SYSTEM", values, "NAME=?", new String[]{"URLADDRESS"});
+                        }
+
+                        canCloseDialog(dialog, true);
+                    }
+                }).show();
     }
 
     /*
@@ -84,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        Log.d(TAG, "showSetPasswordDialog: " + password);
         if(password == null || "".equals(password)){
 
             LayoutInflater factory = LayoutInflater.from(context);
@@ -260,11 +302,9 @@ public class MainActivity extends AppCompatActivity {
                     if((time2 - value2) > 120000){
                         showValidatePwdDialog(intent3);
                     }else{
-
                         startActivity(intent3);
                     }
                     break;
-
             }
         }
     }

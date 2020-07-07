@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.flybird.Tools.DbHelper;
 import com.example.flybird.Tools.MyDbOpenHelper;
 
 import org.w3c.dom.Text;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         context = MainActivity.this;
 
-        myDbHelper = new MyDbOpenHelper(context, "flyBird.db", null, 1);
+        myDbHelper = new MyDbOpenHelper(context, "flyBird.db", null, DbHelper.DbVersion);
         db = myDbHelper.getWritableDatabase();
 
         MyListener listener = new MyListener();

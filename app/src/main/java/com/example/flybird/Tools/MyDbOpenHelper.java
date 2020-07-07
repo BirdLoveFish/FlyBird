@@ -17,6 +17,9 @@ public class MyDbOpenHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
+    public static final int DB_VERSION = 2;
+    private static final int initDbVersion = 1;
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE SYSTEM(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME VARCHAR(32), VALUE VARCHAR(64));");
@@ -25,10 +28,20 @@ public class MyDbOpenHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO SYSTEM (NAME) VALUES('PASSWORD');");
         db.execSQL("INSERT INTO SYSTEM (NAME) VALUES('SAFE_BOX_VALIDATE_TIME')");
         db.execSQL("INSERT INTO SYSTEM (NAME) VALUES('PASSWORD_TIPS')");
+        onUpgrade(db, initDbVersion, DB_VERSION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("INSERT INTO SYSTEM (NAME) VALUES('PASSWORD_TIPS')");
+        for(int i = oldVersion+1;i<=newVersion;i++){
+            switch (i){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

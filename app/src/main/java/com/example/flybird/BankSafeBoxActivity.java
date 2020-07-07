@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.flybird.Models.Bank;
+import com.example.flybird.Tools.DbHelper;
 import com.example.flybird.Tools.MyDbOpenHelper;
 
 import java.util.Collections;
@@ -59,7 +60,7 @@ public class BankSafeBoxActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_safe_box);
 
         context = this;
-        myDbOpenHelper = new MyDbOpenHelper(context, "flyBird.db", null, 1);
+        myDbOpenHelper = new MyDbOpenHelper(context, "flyBird.db", null, DbHelper.DbVersion);
         back = findViewById(R.id.safe_box_back);
         setting = findViewById(R.id.safe_box_setting);
         recyclerView = findViewById(R.id.bank_list);

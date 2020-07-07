@@ -20,10 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.flybird.Tools.DbHelper;
 import com.example.flybird.Tools.MyDbOpenHelper;
-
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         context = MainActivity.this;
 
-        myDbHelper = new MyDbOpenHelper(context, "flyBird.db", null, DbHelper.DbVersion);
+        myDbHelper = new MyDbOpenHelper(context, MyDbOpenHelper.DB_NAME, null, MyDbOpenHelper.DB_VERSION);
         db = myDbHelper.getWritableDatabase();
 
         MyListener listener = new MyListener();
@@ -55,19 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnAccountSafeBox = (Button)findViewById(R.id.btn_account_safe_box);
         btnAccountSafeBox.setOnClickListener(listener);
-
-        initDb();
     }
-
-    private void initDb(){
-
-//        ContentValues values = new ContentValues();
-//        long time = Calendar.getInstance().getTimeInMillis();
-//        values.put("VALUE", time);
-//        db.update("SYSTEM", values, "NAME=?", new String[]{"SAFE_BOX_VALIDATE_TIME"});
-
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

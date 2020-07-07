@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.flybird.Models.Account;
-import com.example.flybird.Tools.DbHelper;
 import com.example.flybird.Tools.MyDbOpenHelper;
 
 
@@ -65,7 +64,7 @@ public class AccountSafeBoxActivity extends AppCompatActivity {
         setting = findViewById(R.id.safe_box_setting);
         title = findViewById(R.id.safe_box_title);
         recyclerView = findViewById(R.id.account_list);
-        myDbOpenHelper = new MyDbOpenHelper(context, "flyBird.db", null, DbHelper.DbVersion);
+        myDbOpenHelper = new MyDbOpenHelper(context, MyDbOpenHelper.DB_NAME, null, MyDbOpenHelper.DB_VERSION);
 
         myListener = new MyListener();
 

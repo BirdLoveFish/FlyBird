@@ -17,6 +17,7 @@ public class MyDbOpenHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
+    public static final String DB_NAME = "flyBird.db";
     public static final int DB_VERSION = 2;
     private static final int initDbVersion = 1;
 

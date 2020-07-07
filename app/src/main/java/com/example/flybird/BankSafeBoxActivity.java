@@ -19,13 +19,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.flybird.Models.Bank;
-import com.example.flybird.Tools.DbHelper;
 import com.example.flybird.Tools.MyDbOpenHelper;
 
 import java.util.Collections;
@@ -60,7 +58,7 @@ public class BankSafeBoxActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_safe_box);
 
         context = this;
-        myDbOpenHelper = new MyDbOpenHelper(context, "flyBird.db", null, DbHelper.DbVersion);
+        myDbOpenHelper = new MyDbOpenHelper(context, MyDbOpenHelper.DB_NAME, null, MyDbOpenHelper.DB_VERSION);
         back = findViewById(R.id.safe_box_back);
         setting = findViewById(R.id.safe_box_setting);
         recyclerView = findViewById(R.id.bank_list);

@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.set_password:
                 showSetPasswordDialog();
                 break;
-//            case R.id.delete_item:
-//                Toast.makeText(context, "333", Toast.LENGTH_SHORT).show();
-//                break;
 
         }
         return super.onOptionsItemSelected(item);

@@ -1,14 +1,18 @@
 package com.example.flybird;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,12 +33,13 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
-    private Button btnBankSafeBox = null;
-    private Button btnAccountSafeBox = null;
-    private String TAG = "fly";
+    private Button btnBankSafeBox;
+    private Button btnAccountSafeBox;
+    private String TAG = "MainActivity";
     private SQLiteDatabase db;
     private MyDbOpenHelper myDbHelper;
 
+    private Button btnNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
         btnAccountSafeBox = (Button)findViewById(R.id.btn_account_safe_box);
         btnAccountSafeBox.setOnClickListener(listener);
+
+        btnNotification = (Button)findViewById(R.id.btn_notification);
+        btnNotification.setOnClickListener(listener);
     }
 
     @Override
@@ -301,6 +309,16 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         startActivity(intent3);
                     }
+                    break;
+                case R.id.btn_notification:
+//                    Intent intent4 = new Intent(context, NotificationActivity.class);
+//                    startActivity(intent4);
+
+                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    Notification notification = new Notification.Builder(MainActivity.this).build();
+                
+
+                    manager.notify(1,notification);
                     break;
             }
         }

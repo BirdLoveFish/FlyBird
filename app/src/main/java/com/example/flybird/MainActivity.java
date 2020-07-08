@@ -5,7 +5,9 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.AlertDialog;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -314,11 +317,36 @@ public class MainActivity extends AppCompatActivity {
 //                    Intent intent4 = new Intent(context, NotificationActivity.class);
 //                    startActivity(intent4);
 
-                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    Notification notification = new Notification.Builder(MainActivity.this).build();
-                
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("xxxABC",true);
+                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("xxxEFG", xxxEFG);
+                    intent.putExtras(bundle);
 
+
+                    NotificationManager manager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                    //需添加的代码
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                        String channelId = "default";
+                        String channelName = "默认通知";
+                        manager.createNotificationChannel(new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH));
+                    }
+                    //
+                    Notification notification =new NotificationCompat.Builder(context,"default")
+                            .setContentTitle("This is content title")
+                            .setContentText("this is content text")
+                            .setWhen(System.currentTimeMillis())
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                            .setContentIntent(PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT))
+                            .build()
+                            ;
                     manager.notify(1,notification);
+
+
+                    Log.d(TAG, "onClick: " + "点了");
                     break;
             }
         }

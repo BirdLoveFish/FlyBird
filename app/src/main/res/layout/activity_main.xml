@@ -25,4 +25,16 @@
         android:layout_height="wrap_content"
         android:text="通知"/>
 
+    <Button
+        android:id="@+id/service_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="启动服务" />
+
+    <Button
+        android:id="@+id/service_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止服务" />
+
 </LinearLayout>

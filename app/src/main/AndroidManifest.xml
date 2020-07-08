@@ -13,7 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NotificationActivity"></activity>
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".NotificationActivity" />
         <activity android:name=".AccountSafeBoxActivity" />
         <activity android:name=".BankSafeBoxActivity" />
         <activity android:name=".MainActivity">

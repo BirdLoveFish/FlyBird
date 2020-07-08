@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnNotification;
 
+    private Button btnServerStart;
+    private Button btnServerEnd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -347,6 +350,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                     Log.d(TAG, "onClick: " + "点了");
+                    break;
+                case R.id.service_start:
+                    startService(new Intent(getBaseContext(), MyService.class));
+                    break;
+                case R.id.service_end:
+                    stopService(new Intent(getBaseContext(), MyService.class));
                     break;
             }
         }

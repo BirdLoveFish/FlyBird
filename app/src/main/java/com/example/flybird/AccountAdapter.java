@@ -103,7 +103,7 @@ public class AccountAdapter extends SlideRecyclerView.Adapter<AccountAdapter.Vie
 
                     textViewName.setText(accountList.get(getLayoutPosition()).getName());
                     textViewAccount.setText(accountList.get(getLayoutPosition()).getAccount());
-                    textViewPassword.setText(accountList.get(getLayoutPosition()).getAccount());
+                    textViewPassword.setText(accountList.get(getLayoutPosition()).getPassword());
                     textViewOther.setText(accountList.get(getLayoutPosition()).getOther());
 
                     final View accountTitleView = factory.inflate(R.layout.dialog_account_title, null);
@@ -193,7 +193,7 @@ public class AccountAdapter extends SlideRecyclerView.Adapter<AccountAdapter.Vie
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        db.delete("BANKSAFEBOX","id=?",new String[]{accountList.get(position).getId()});
+                        db.delete("ACCOUNTSAFEBOX","id=?",new String[]{accountList.get(position).getId()});
                         accountList.remove(position);
                         notifyDataSetChanged();
                     }

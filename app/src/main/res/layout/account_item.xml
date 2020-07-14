@@ -16,14 +16,17 @@
             android:layout_height="match_parent"
             android:layout_weight="0.7"
             android:gravity="center"
-            android:text="aaaaaaa"/>
+            android:singleLine="true"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/account_account"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="end"/>
 
 <!--        <TextView-->
 <!--            android:id="@+id/account_tips"-->

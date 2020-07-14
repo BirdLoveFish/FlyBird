@@ -128,15 +128,53 @@ public class AccountSafeBoxActivity extends AppCompatActivity {
 
     private void showMenu(){
         PopupMenu popupMenu = new PopupMenu(context, setting);
-        popupMenu.getMenuInflater().inflate(R.menu.menu_bank, popupMenu.getMenu());
+        popupMenu.getMenuInflater().inflate(R.menu.menu_account, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.menu_bank_add:
+                    case R.id.menu_account_add:
                         showMenuAdd();
                         break;
-                    case R.id.menu_bank_backups:
+                    case R.id.menu_account_tips:
+
+                        String accountTips = null;
+                        Cursor cursor = db.query("SYSTEM", new String[]{"VALUE"}, "NAME=?", new String[]{"ACCOUNTTIPS"}, null, null, null);
+                        if(cursor.moveToNext()){
+                            accountTips = cursor.getString(cursor.getColumnIndex("VALUE"));
+                        }
+                        cursor.close();
+
+                        LayoutInflater factory = LayoutInflater.from(context);
+                        final View accountTipsView = factory.inflate(R.layout.dialog_account_tips, null);
+                        final EditText editTextTips = (EditText) accountTipsView.findViewById(R.id.dialog_tips_tv);
+                        editTextTips.setText(accountTips);
+
+                        final String finalAccountTips = accountTips;
+                        alert = new AlertDialog.Builder(context)
+                                .setTitle("提示信息")
+                                .setView(accountTipsView)
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String tips = editTextTips.getText().toString();
+
+                                        if(!finalAccountTips.equals(tips)){
+                                            ContentValues values1 = new ContentValues();
+                                            values1.put("VALUE", tips);
+                                            db.update("SYSTEM", values1 ,"NAME=?", new String[]{"ACCOUNTTIPS"});
+                                        }
+                                    }
+                                }).create();
+                        alert.show();
+                        break;
+                    case R.id.menu_account_backups:
 
                         new Thread(new Runnable() {
                             @Override

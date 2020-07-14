@@ -18,7 +18,7 @@ public class MyDbOpenHelper extends SQLiteOpenHelper {
     }
 
     public static final String DB_NAME = "flyBird.db";
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 4;
     private static final int initDbVersion = 1;
 
     @Override
@@ -40,6 +40,9 @@ public class MyDbOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 3:
                     db.execSQL("INSERT INTO SYSTEM (NAME,VALUE) VALUES('URLADDRESS', 'http://localhost:5000/')");
+                    break;
+                case 4:
+                    db.execSQL("INSERT INTO SYSTEM (NAME,VALUE) VALUES('ACCOUNTTIPS', '')");
                     break;
                 default:
                     break;

@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(context, "已取消", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "已取消", Toast.LENGTH_SHORT).show();
                         canCloseDialog(dialog, true);
                     }
                 })
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context, "已取消", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "已取消", Toast.LENGTH_SHORT).show();
                             canCloseDialog(dialog, true);
                         }
                     })
@@ -346,6 +346,9 @@ public class MainActivity extends AppCompatActivity {
                             .setContentIntent(PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT))
                             .build()
                             ;
+
+                    notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+
                     manager.notify(1,notification);
 
 

@@ -213,7 +213,7 @@ public class BankSafeBoxActivity extends AppCompatActivity {
                         values1.put("PASSWORD", bankPassword);
                         values1.put("OTHER", bankOther);
                         int id = (int) db.insert("BANKSAFEBOX", null, values1);
-                        bankList.add(new Bank((String.valueOf(id)), bankFullName, bankSimpleName, bankOwner, bankPassword, bankOwner));
+                        bankList.add(new Bank((String.valueOf(id)), bankFullName, bankSimpleName, bankOwner, bankPassword, bankOther));
                         adapter.notifyItemInserted(id - 1);
                         adapter.notifyItemRangeChanged(id, bankList.size() - id - 1);
                     }
